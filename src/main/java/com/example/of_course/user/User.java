@@ -3,6 +3,7 @@ package com.example.of_course.user;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +16,9 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    public User() {
+    }
 
     public User(String name, String email, String password) {
         this.name = name;

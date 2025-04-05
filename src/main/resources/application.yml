@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: of-course
+  config:
+    import: optional:file:.env[.properties]
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD:}
+security:
+  password:
+    min-length: 12
+    max-length: 255
