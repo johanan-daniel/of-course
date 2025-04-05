@@ -1,10 +1,8 @@
 package com.example.of_course.user;
 
+import com.example.of_course.dto.ResponseMessage;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -16,8 +14,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> createUser(@RequestBody SignupRequest request) {
-        String response = userService.registerUser(request);
+    public ResponseEntity<ResponseMessage> createUser(@RequestBody SignupRequest request) {
+        String message = userService.registerUser(request);
+        ResponseMessage response = new ResponseMessage(message);
+
         System.out.println("Registered user " + request.getEmail());
         return ResponseEntity.ok(response);
     }
