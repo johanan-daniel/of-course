@@ -1,6 +1,6 @@
 package com.example.of_course.user;
 
-public class SigninRequest {
+public class LoginRequest {
     private String email;
     private String password;
 

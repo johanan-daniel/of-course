@@ -3,14 +3,25 @@ package com.example.of_course.dto;
 public class ResponseMessage {
     private int statusCode = 200;
     private String message;
+    private String details;
 
-    public ResponseMessage(int statusCode, String message) {
+    public ResponseMessage(int statusCode, String message, String details) {
         this.statusCode = statusCode;
         this.message = message;
+        this.details = details;
     }
 
     public ResponseMessage(String message) {
         this.message = message;
+    }
+
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
     }
 
     public String getMessage() {
@@ -21,11 +32,11 @@ public class ResponseMessage {
         this.message = message;
     }
 
-    public int getStatusCode() {
-        return statusCode;
+    public String getDetails() {
+        return details;
     }
 
-    public void setStatusCode(int statusCode) {
-        this.statusCode = statusCode;
+    public void setDetails(String details) {
+        this.details = details;
     }
 }

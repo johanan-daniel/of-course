@@ -21,4 +21,12 @@ public class AuthController {
         System.out.println("Registered user " + request.getEmail());
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<ResponseMessage> loginUser(@RequestBody LoginRequest request) {
+       String message = userService.loginUser(request);
+       ResponseMessage response = new ResponseMessage(message);
+
+       return ResponseEntity.ok(response);
+    }
 }

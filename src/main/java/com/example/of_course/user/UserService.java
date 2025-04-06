@@ -4,6 +4,8 @@ import com.example.of_course.config.PasswordPolicyConfig;
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -71,14 +73,41 @@ public class UserService {
         return "User registered successfully.";
     }
 
-    public boolean loginUser(SigninRequest request) {
-        Optional<User> wrappedUser = userRepo.findByEmail(request.getEmail());
+    public String loginUser(LoginRequest request) {
+        String email = request.getEmail();
+        String raw_password = request.getPassword();
+
+        if (email == null) {
+            throw new AuthenticationCredentialsNotFoundException("The email address field was empty.");
+        }
+        if (raw_password == null) {
+            throw new AuthenticationCredentialsNotFoundException("The password field was empty.");
+        }
+
+        // TODO validate email and password before db request & checking against hashed
+        int minEmailLen = 5;
+        int maxEmailLen = 254;
+        int minPasswordLen = passwordPolicyConfig.getMinLength();
+        int maxPasswordLen = passwordPolicyConfig.getMaxLength();
+        if (email.length() < minEmailLen || email.length() > maxEmailLen) {
+            throw new IllegalArgumentException("Email length is invalid.");
+        }
+        if (raw_password.length() < minPasswordLen || raw_password.length() > maxPasswordLen) {
+            throw new IllegalArgumentException("Password length is invalid.");
+        }
+
+        Optional<User> wrappedUser = userRepo.findByEmail(email);
         User user = wrappedUser.orElseThrow(
-                () -> new EntityNotFoundException(String.format("No user with email %s", request.getEmail()))
+                () -> new EntityNotFoundException(String.format("No user with email %s.", email))
         );
         String encrypted_password = user.getPassword();
 
-//        validate password
-        return true;
+        if (!passwordEncoder.matches(raw_password, encrypted_password)) {
+            throw new BadCredentialsException("Password is invalid.");
+        }
+
+        // TODO generate & send JWT
+
+        return "User successfully signed in";
     }
 }
