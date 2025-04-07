@@ -72,7 +72,7 @@ public class UserService {
         User newUser = new User(request.getEmail(), hashedPassword);
         userRepo.save(newUser);
 
-        return "User registered successfully.";
+        return "User registered successfully";
     }
 
     public String loginUser(LoginRequest request) {

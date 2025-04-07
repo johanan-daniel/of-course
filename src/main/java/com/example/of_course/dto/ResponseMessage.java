@@ -2,7 +2,7 @@ package com.example.of_course.dto;
 
 public class ResponseMessage {
     private int statusCode = 200;
-    private String message;
+    private String message = "OK";
     private String details;
 
     public ResponseMessage(int statusCode, String message, String details) {
