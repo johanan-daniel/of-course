@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// FIXME ahhhhhhhhhh the ControllerAdvice classes get prioritized BY THEIR LEXICOGRAPHICAL ORDER
+// ahhhhhhhhhh the ControllerAdvice classes get prioritized BY THEIR LEXICOGRAPHICAL ORDER
 //  and NOT THEIR EXCEPTION SPECIFICITY what the heck is this spring boot smh i shoulda used .net
 //  https://github.com/spring-projects/spring-framework/issues/31818
 //  also the default precedence for any controlleradvice is LOWEST?????? WHY NOT JUST 0 ahhhhhhhhh
