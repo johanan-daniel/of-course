@@ -22,10 +22,10 @@ public class User {
     public User() {
     }
 
-    public User(String name, String email, String password) {
-        this.name = name;
+    public User(String email, String password, String name) {
         this.email = email;
         this.password = password;
+        this.name = name;
     }
 
     public User(String email, String password) {

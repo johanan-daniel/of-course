@@ -11,6 +11,11 @@ public class ResponseMessage {
         this.details = details;
     }
 
+    public ResponseMessage(int statusCode, String message) {
+        this.statusCode = statusCode;
+        this.message = message;
+    }
+
     public ResponseMessage(String message) {
         this.message = message;
     }

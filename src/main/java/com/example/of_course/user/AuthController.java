@@ -1,8 +1,11 @@
 package com.example.of_course.user;
 
 import com.example.of_course.dto.ResponseMessage;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,11 +18,17 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<ResponseMessage> createUser(@RequestBody SignupRequest request) {
-        String message = userService.registerUser(request);
-        ResponseMessage response = new ResponseMessage(message);
+        userService.registerUser(request);
+
+        SignupResponseMessage response =
+                new SignupResponseMessage(
+                        HttpStatus.CREATED.value(),
+                        "User registered successfully",
+                        request.getEmail()
+                );
 
         System.out.println("Registered user " + request.getEmail());
-        return ResponseEntity.ok(response);
+        return ResponseEntity.created(URI.create("moo")).body(response);
     }
 
     @PostMapping("/login")

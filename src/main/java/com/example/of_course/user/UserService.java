@@ -37,10 +37,10 @@ public class UserService {
         );
     }
 
-    public String registerUser(SignupRequest request) {
+    public Boolean registerUser(SignupRequest request) {
         Optional<User> existingUser = userRepo.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
-            throw new UserEmailAlreadyExistsException("Email address is already in use.");
+            throw new UserEmailAlreadyExistsException("Email address is already in use.", request.getEmail());
         }
 
         int nameLen = request.getName().length();
@@ -72,7 +72,7 @@ public class UserService {
         User newUser = new User(request.getEmail(), hashedPassword);
         userRepo.save(newUser);
 
-        return "User registered successfully";
+        return true;
     }
 
     public String loginUser(LoginRequest request) {

@@ -1,0 +1,18 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      # Essential for tests: Create schema on startup, drop on shutdown
+      # Ensures each test runs with a clean database
+      ddl-auto: create-drop
+#    show-sql: true
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  # Optional: Prevent Spring Boot from trying to run database initializers (like data.sql)
+  # if you want full control within tests or are using create-drop
+  sql:
+    init:
+      mode: never
