@@ -1,4 +1,4 @@
-package skill;
+package com.example.of_course.skill;
 
 import jakarta.persistence.*;
 

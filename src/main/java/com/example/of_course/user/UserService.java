@@ -9,6 +9,7 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.example.of_course.security.JwtService;
 
 import java.util.Optional;
 
@@ -17,12 +18,14 @@ public class UserService {
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
     private final PasswordPolicyConfig passwordPolicyConfig;
+    private final JwtService jwtService;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordPolicyConfig config) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordPolicyConfig config, JwtService jwtService) {
         this.userRepo = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.passwordPolicyConfig = config;
+        this.jwtService = jwtService;
     }
 
     public User getUserById(int id) {
@@ -37,6 +40,12 @@ public class UserService {
         );
     }
 
+    /**
+     * Validates request by checking for existing user with given email, and invalid lengths.
+     *
+     * @param request SignupRequest of {email, password, name (optional)}
+     * @return true if successful, false if anything invalid
+     */
     public Boolean registerUser(SignupRequest request) {
         Optional<User> existingUser = userRepo.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
@@ -111,8 +120,7 @@ public class UserService {
             throw new BadCredentialsException("Password is invalid.");
         }
 
-        // TODO generate & send JWT
-
-        return "User successfully signed in";
+        // CHECK catch exception when making token?
+        return jwtService.generateToken(email);
     }
 }

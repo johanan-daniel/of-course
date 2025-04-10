@@ -1,6 +1,7 @@
 package com.example.of_course.user;
 
 import com.example.of_course.dto.ResponseMessage;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,9 @@ import java.net.URI;
 public class AuthController {
     private final UserService userService;
 
+    @Value("${jwt.expiration.ms}")
+    private long jwtExpiration;
+
     public AuthController(UserService userService) {
         this.userService = userService;
     }
@@ -20,8 +24,8 @@ public class AuthController {
     public ResponseEntity<ResponseMessage> createUser(@RequestBody SignupRequest request) {
         userService.registerUser(request);
 
-        SignupResponseMessage response =
-                new SignupResponseMessage(
+        SignupResponse response =
+                new SignupResponse(
                         HttpStatus.CREATED.value(),
                         "User registered successfully",
                         request.getEmail()
@@ -32,9 +36,14 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseMessage> loginUser(@RequestBody LoginRequest request) {
-       String message = userService.loginUser(request);
-       ResponseMessage response = new ResponseMessage(message);
+    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest request) {
+       String token = userService.loginUser(request);
+//       ResponseMessage response = new ResponseMessage(message);
+       LoginResponse response =
+               new LoginResponse(
+                       token,
+                       jwtExpiration
+               );
 
        return ResponseEntity.ok(response);
     }

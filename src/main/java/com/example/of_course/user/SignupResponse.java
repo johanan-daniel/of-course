@@ -2,15 +2,15 @@ package com.example.of_course.user;
 
 import com.example.of_course.dto.ResponseMessage;
 
-public class SignupResponseMessage extends ResponseMessage {
+public class SignupResponse extends ResponseMessage {
     private String email;
 
-    public SignupResponseMessage(int statusCode, String message, String details, String email) {
+    public SignupResponse(int statusCode, String message, String details, String email) {
         super(statusCode, message, details);
         this.email = email;
     }
 
-    public SignupResponseMessage(int statusCode, String message, String email) {
+    public SignupResponse(int statusCode, String message, String email) {
         super(statusCode, message);
         this.email = email;
     }

@@ -31,7 +31,8 @@ public class GlobalExceptionHandler {
         String cause = e.getClass().getSimpleName();
         String details = cause + " – " + e.getMessage();
 
-//        e.printStackTrace();
+        // TODO only do when profile is dev?
+        e.printStackTrace();
 
         ResponseMessage response = new ResponseMessage(status.value(), message, details);
         return ResponseEntity.status(status).body(response);
