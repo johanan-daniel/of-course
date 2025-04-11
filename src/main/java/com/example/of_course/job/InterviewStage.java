@@ -3,8 +3,8 @@ package com.example.of_course.job;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "FurthestInterview")
-public class FurthestInterview {
+@Table(name = "InterviewStage")
+public class InterviewStage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -13,15 +13,15 @@ public class FurthestInterview {
     private String label;
 
 
-    public FurthestInterview() {
+    public InterviewStage() {
     }
 
-    public FurthestInterview(int id, String label) {
+    public InterviewStage(int id, String label) {
         this.id = id;
         this.label = label;
     }
 
-    public FurthestInterview(String label) {
+    public InterviewStage(String label) {
         this.label = label;
     }
 
@@ -43,7 +43,7 @@ public class FurthestInterview {
 
     @Override
     public String toString() {
-        return "FurthestInterview{" +
+        return "InterviewStage{" +
                 "id=" + id +
                 ", label='" + label + '\'' +
                 '}';

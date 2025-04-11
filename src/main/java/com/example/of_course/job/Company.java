@@ -1,4 +1,4 @@
-package com.example.of_course.company;
+package com.example.of_course.job;
 
 import jakarta.persistence.*;
 

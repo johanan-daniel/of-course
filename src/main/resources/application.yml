@@ -10,6 +10,13 @@ spring:
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD:}
+#    initialization-mode: always
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/schema-postgresql.sql
+      data-locations: classpath:db/data-postgresql.sql
+
 security:
   password:
     min-length: 12
