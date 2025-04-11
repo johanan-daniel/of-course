@@ -3,10 +3,14 @@ package com.example.of_course.exception;
 import com.example.of_course.dto.ResponseMessage;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.*;
 
 // ahhhhhhhhhh the ControllerAdvice classes get prioritized BY THEIR LEXICOGRAPHICAL ORDER
 //  and NOT THEIR EXCEPTION SPECIFICITY what the heck is this spring boot smh i shoulda used .net
@@ -22,6 +26,21 @@ public class GlobalExceptionHandler {
 
         ResponseMessage response = new ResponseMessage(status.value(), message, details);
         return ResponseEntity.status(status).body(response);
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ResponseMessage> handleHttpMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+        HttpStatus status = HttpStatus.METHOD_NOT_ALLOWED;
+        String message = status.getReasonPhrase();
+        String details = e.getMessage();
+        Set<HttpMethod> allowed = e.getSupportedHttpMethods();
+
+        ResponseEntity.BodyBuilder responseBuilder = ResponseEntity.status(status);
+        if (allowed != null) {
+            responseBuilder.allow(allowed.toArray(new HttpMethod[0]));
+        }
+        ResponseMessage responseBody = new ResponseMessage(status.value(), message, details);
+        return responseBuilder.body(responseBody);
     }
 
     @ExceptionHandler(Exception.class)
