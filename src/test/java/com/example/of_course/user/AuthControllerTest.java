@@ -1,11 +1,15 @@
 package com.example.of_course.user;
 
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
+import com.example.of_course.security.JwtService;
+import com.example.of_course.security.SecurityConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,6 +22,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+//@Import(SecurityConfig.class)
+// ignore filters to only test controller behavior
+@AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(AuthController.class)
 public class AuthControllerTest {
     @Autowired
@@ -29,14 +36,17 @@ public class AuthControllerTest {
     @MockitoBean
     private UserService userService;
 
-    private static final String LOGIN_URL = "/auth/login";
+    @MockitoBean
+    private JwtService jwtService;
+
+    private static final String LOGIN_URL = "/api/auth/login";
 
     // CHECK mock PasswordEncoder?
     //  maybe to check if it gets called for code coverage?? (this is checked in service tests)
 
     @Nested
     class SignupTests {
-        private static final String SIGNUP_URL = "/auth/signup";
+        private static final String SIGNUP_URL = "/api/auth/signup";
 
         private ResultActions performSignup(SignupRequest request) throws Exception {
             String requestAsString = objectMapper.writeValueAsString(request);

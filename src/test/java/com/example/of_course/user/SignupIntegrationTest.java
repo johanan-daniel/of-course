@@ -38,7 +38,7 @@ public class SignupIntegrationTest {
     @Autowired
     private PasswordPolicyConfig passwordPolicyConfig;
 
-    private static final String SIGNUP_URL = "/auth/signup";
+    private static final String SIGNUP_URL = "/api/auth/signup";
 
     private ResultActions performSignup(SignupRequest request) throws Exception {
         String requestAsString = objectMapper.writeValueAsString(request);
