@@ -13,18 +13,18 @@ public class Company {
     private String name;
 
     @Column(name = "careers_url", length = 500)
-    private String careersUrl;
+    private String careersPageUrl;
 
     public Company() {
     }
 
-    public Company(String name, String careersUrl) {
-        this.name = name;
-        this.careersUrl = careersUrl;
-    }
-
     public Company(String name) {
         this.name = name;
+    }
+
+    public Company(String name, String careersPageUrl) {
+        this.name = name;
+        this.careersPageUrl = careersPageUrl;
     }
 
     public int getId() {
@@ -43,12 +43,12 @@ public class Company {
         this.name = name;
     }
 
-    public String getCareersUrl() {
-        return careersUrl;
+    public String getCareersPageUrl() {
+        return careersPageUrl;
     }
 
-    public void setCareersUrl(String careersUrl) {
-        this.careersUrl = careersUrl;
+    public void setCareersPageUrl(String careersPageUrl) {
+        this.careersPageUrl = careersPageUrl;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Company {
         return "Company{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", careersUrl='" + careersUrl + '\'' +
+                ", careersUrl='" + careersPageUrl + '\'' +
                 '}';
     }
 }
