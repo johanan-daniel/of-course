@@ -1,6 +1,6 @@
 package com.example.of_course.exception;
 
-import com.example.of_course.dto.ResponseMessage;
+import com.example.of_course.common.dto.ResponseMessageDto;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpMethod;
@@ -19,17 +19,17 @@ import java.util.*;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ResponseMessage> handleEntityNotFound(EntityNotFoundException e) {
+    public ResponseEntity<ResponseMessageDto> handleEntityNotFound(EntityNotFoundException e) {
         HttpStatus status = HttpStatus.NOT_FOUND;
         String message = "Could not find provided value";
         String details = e.getMessage();
 
-        ResponseMessage response = new ResponseMessage(status.value(), message, details);
+        ResponseMessageDto response = new ResponseMessageDto(status.value(), message, details);
         return ResponseEntity.status(status).body(response);
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public ResponseEntity<ResponseMessage> handleHttpMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+    public ResponseEntity<ResponseMessageDto> handleHttpMethodNotSupported(HttpRequestMethodNotSupportedException e) {
         HttpStatus status = HttpStatus.METHOD_NOT_ALLOWED;
         String message = status.getReasonPhrase();
         String details = e.getMessage();
@@ -39,12 +39,12 @@ public class GlobalExceptionHandler {
         if (allowed != null) {
             responseBuilder.allow(allowed.toArray(new HttpMethod[0]));
         }
-        ResponseMessage responseBody = new ResponseMessage(status.value(), message, details);
+        ResponseMessageDto responseBody = new ResponseMessageDto(status.value(), message, details);
         return responseBuilder.body(responseBody);
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ResponseMessage> handleGeneralException(Exception e) {
+    public ResponseEntity<ResponseMessageDto> handleGeneralException(Exception e) {
         HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR;
         String message = "An error occurred while processing the request";
         String cause = e.getClass().getSimpleName();
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
         // TODO only do when profile is dev?
         e.printStackTrace();
 
-        ResponseMessage response = new ResponseMessage(status.value(), message, details);
+        ResponseMessageDto response = new ResponseMessageDto(status.value(), message, details);
         return ResponseEntity.status(status).body(response);
     }
 }

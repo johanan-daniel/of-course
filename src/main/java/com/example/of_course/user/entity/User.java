@@ -1,4 +1,4 @@
-package com.example.of_course.user;
+package com.example.of_course.user.entity;
 
 import jakarta.persistence.*;
 

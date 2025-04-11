@@ -1,6 +1,8 @@
 package com.example.of_course.user;
 
-import com.example.of_course.config.PasswordPolicyConfig;
+import com.example.of_course.user.config.PasswordPolicyConfig;
+import com.example.of_course.user.dto.SignupRequestDto;
+import com.example.of_course.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +42,7 @@ public class SignupIntegrationTest {
 
     private static final String SIGNUP_URL = "/api/auth/signup";
 
-    private ResultActions performSignup(SignupRequest request) throws Exception {
+    private ResultActions performSignup(SignupRequestDto request) throws Exception {
         String requestAsString = objectMapper.writeValueAsString(request);
 
         return mockMvc.perform(post(SIGNUP_URL)
@@ -52,7 +54,7 @@ public class SignupIntegrationTest {
 
     @Test
     public void whenPostSignupIsValid_thenReturns201_andUserInDbWithHashedPassword() throws Exception {
-        SignupRequest request = new SignupRequest("test1@example.com", "123456789012");
+        SignupRequestDto request = new SignupRequestDto("test1@example.com", "123456789012");
 
         performSignup(request)
                 .andExpect(status().isCreated());
@@ -69,7 +71,7 @@ public class SignupIntegrationTest {
 
     @Test
     public void whenPostSignupWithShortPassword_thenReturns400_andNoUserInDb() throws Exception {
-        SignupRequest request = new SignupRequest("test1@example.com", "a");
+        SignupRequestDto request = new SignupRequestDto("test1@example.com", "a");
         long initialCount = userRepository.count();
 
         performSignup(request)

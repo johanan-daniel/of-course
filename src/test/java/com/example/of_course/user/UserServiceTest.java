@@ -1,7 +1,9 @@
 package com.example.of_course.user;
 
-import com.example.of_course.config.PasswordPolicyConfig;
+import com.example.of_course.user.config.PasswordPolicyConfig;
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
+import com.example.of_course.user.dto.SignupRequestDto;
+import com.example.of_course.user.entity.User;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +43,7 @@ public class UserServiceTest {
 
         @Test
         void whenSignupWithExistingEmail_thenThrowsUserEmailAlreadyExists() {
-            SignupRequest request = new SignupRequest("test1@gmail.com", "123456789012");
+            SignupRequestDto request = new SignupRequestDto("test1@gmail.com", "123456789012");
 
             when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(new User()));
 
@@ -54,7 +56,7 @@ public class UserServiceTest {
 
         @Test
         void whenSignupWithNameTooLong_thenThrowsIllegalArgument() {
-            SignupRequest request = new SignupRequest("test1@gmail.com", "123456789012", "this is a name that is too long and therefore throws an error");
+            SignupRequestDto request = new SignupRequestDto("test1@gmail.com", "123456789012", "this is a name that is too long and therefore throws an error");
 
             when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
@@ -66,7 +68,7 @@ public class UserServiceTest {
 
         @Test
         void whenSignupWithEmailTooShort_thenThrowsIllegalArgument() {
-            SignupRequest request = new SignupRequest("a", "123456789012");
+            SignupRequestDto request = new SignupRequestDto("a", "123456789012");
 
             when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
@@ -79,7 +81,7 @@ public class UserServiceTest {
         @Test
         void whenSignupWithPasswordTooShort_thenThrowsIllegalArgument() {
             setUpPasswordPolicy();
-            SignupRequest request = new SignupRequest("user1@gmail.com", "12345678901");
+            SignupRequestDto request = new SignupRequestDto("user1@gmail.com", "12345678901");
 
             when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
 
@@ -95,7 +97,7 @@ public class UserServiceTest {
         void whenSignupWithNewEmail_thenSavesUser_andHashesPassword() {
             setUpPasswordPolicy();
 
-            SignupRequest request = new SignupRequest("test1@gmail.com", "123456789012");
+            SignupRequestDto request = new SignupRequestDto("test1@gmail.com", "123456789012");
             String hashedPassword = "asdf";
 //            User savedUser = new User(request.getEmail(), request.getPassword(), request.getName());
 

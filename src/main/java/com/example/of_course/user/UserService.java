@@ -1,8 +1,11 @@
 package com.example.of_course.user;
 
-import com.example.of_course.config.PasswordPolicyConfig;
+import com.example.of_course.user.config.PasswordPolicyConfig;
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
 
+import com.example.of_course.user.dto.LoginRequestDto;
+import com.example.of_course.user.dto.SignupRequestDto;
+import com.example.of_course.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -43,10 +46,10 @@ public class UserService {
     /**
      * Validates request by checking for existing user with given email, and invalid lengths.
      *
-     * @param request SignupRequest of {email, password, name (optional)}
+     * @param request SignupRequestDto of {email, password, name (optional)}
      * @return true if successful, false if anything invalid
      */
-    public Boolean registerUser(SignupRequest request) {
+    public Boolean registerUser(SignupRequestDto request) {
         Optional<User> existingUser = userRepo.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
             throw new UserEmailAlreadyExistsException("Email address is already in use.", request.getEmail());
@@ -84,7 +87,7 @@ public class UserService {
         return true;
     }
 
-    public String loginUser(LoginRequest request) {
+    public String loginUser(LoginRequestDto request) {
         String email = request.getEmail();
         String rawPassword = request.getPassword();
 

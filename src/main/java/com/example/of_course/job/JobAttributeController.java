@@ -1,6 +1,6 @@
 package com.example.of_course.job;
 
-import com.example.of_course.dto.JobAttribute;
+import com.example.of_course.job.dto.JobAttributeDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,21 +19,21 @@ public class JobAttributeController {
     }
 
     @GetMapping("/statusTypes")
-    public ResponseEntity<Map<String, List<JobAttribute>>> getAllStatusTypes() {
-        Map<String, List<JobAttribute>> statusTypes = jobAttributeService.getAllStatusTypes();
+    public ResponseEntity<Map<String, List<JobAttributeDto>>> getAllStatusTypes() {
+        Map<String, List<JobAttributeDto>> statusTypes = jobAttributeService.getAllStatusTypes();
         return ResponseEntity.ok(statusTypes);
     }
 
 
     @GetMapping("/levels")
-    public ResponseEntity<Map<String, List<JobAttribute>>> getAllLevels() {
-        Map<String, List<JobAttribute>> levels = jobAttributeService.getAllLevels();
+    public ResponseEntity<Map<String, List<JobAttributeDto>>> getAllLevels() {
+        Map<String, List<JobAttributeDto>> levels = jobAttributeService.getAllLevels();
         return ResponseEntity.ok(levels);
     }
 
     @GetMapping("/interviewStages")
-    public ResponseEntity<Map<String, List<JobAttribute>>> getAllInterviewStages() {
-        Map<String, List<JobAttribute>> stages = jobAttributeService.getInterviewStages();
+    public ResponseEntity<Map<String, List<JobAttributeDto>>> getAllInterviewStages() {
+        Map<String, List<JobAttributeDto>> stages = jobAttributeService.getInterviewStages();
         return ResponseEntity.ok(stages);
     }
 }

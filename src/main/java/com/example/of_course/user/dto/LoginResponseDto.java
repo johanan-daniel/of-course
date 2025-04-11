@@ -1,13 +1,11 @@
-package com.example.of_course.user;
+package com.example.of_course.user.dto;
 
-import com.example.of_course.dto.ResponseMessage;
-
-public class LoginResponse {
+public class LoginResponseDto {
     private String token;
     private final String tokenType = "Bearer";
     private long expiresIn;
 
-    public LoginResponse(String token, long expiresIn) {
+    public LoginResponseDto(String token, long expiresIn) {
         this.token = token;
         this.expiresIn = expiresIn;
     }

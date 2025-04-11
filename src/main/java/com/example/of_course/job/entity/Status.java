@@ -1,10 +1,10 @@
-package com.example.of_course.job;
+package com.example.of_course.job.entity;
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Level")
-public class Level {
+@Table(name = "Status")
+public class Status {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -13,15 +13,15 @@ public class Level {
     private String label;
 
 
-    public Level() {
+    public Status() {
     }
 
-    public Level(int id, String label) {
+    public Status(int id, String label) {
         this.id = id;
         this.label = label;
     }
 
-    public Level(String label) {
+    public Status(String label) {
         this.label = label;
     }
 
@@ -43,7 +43,7 @@ public class Level {
 
     @Override
     public String toString() {
-        return "Level{" +
+        return "Status{" +
                 "id=" + id +
                 ", label='" + label + '\'' +
                 '}';

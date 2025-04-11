@@ -2,14 +2,14 @@ package com.example.of_course.user;
 
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
 import com.example.of_course.security.JwtService;
-import com.example.of_course.security.SecurityConfig;
+import com.example.of_course.user.controller.AuthController;
+import com.example.of_course.user.dto.SignupRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -48,7 +48,7 @@ public class AuthControllerTest {
     class SignupTests {
         private static final String SIGNUP_URL = "/api/auth/signup";
 
-        private ResultActions performSignup(SignupRequest request) throws Exception {
+        private ResultActions performSignup(SignupRequestDto request) throws Exception {
             String requestAsString = objectMapper.writeValueAsString(request);
 
             return mockMvc.perform(post(SIGNUP_URL)
@@ -59,25 +59,25 @@ public class AuthControllerTest {
 
         @Test
         void whenPostValidSignupRequest_thenReturns201Created() throws Exception {
-            SignupRequest request = new SignupRequest();
+            SignupRequestDto request = new SignupRequestDto();
 
             // mocks service successfully creating user with message returned
-            when(userService.registerUser(any(SignupRequest.class))).thenReturn(true);
+            when(userService.registerUser(any(SignupRequestDto.class))).thenReturn(true);
 
             // tests controller response when service successfully creates user
             performSignup(request)
                     .andExpect(status().isCreated());
 
             // verifies userService was called (tests path coverage?)
-            verify(userService).registerUser(any(SignupRequest.class));
+            verify(userService).registerUser(any(SignupRequestDto.class));
         }
 
         @Test
         void whenPostSignupWithExistingEmail_thenReturns409Conflict() throws Exception {
-            SignupRequest request = new SignupRequest();
+            SignupRequestDto request = new SignupRequestDto();
 
             // mocks service throwing exception for existing email
-            when(userService.registerUser(any(SignupRequest.class)))
+            when(userService.registerUser(any(SignupRequestDto.class)))
                     .thenThrow(new UserEmailAlreadyExistsException("Email address is already in use.", "user1@gmail.com"));
 
             // tests controller response when service throws exception
@@ -87,7 +87,7 @@ public class AuthControllerTest {
 //                .andExpect(jsonPath("$.message").value("Email already in use"))
 //                .andExpect(jsonPath("$.details").value("Email address is already in use."));
 
-//        verify(userService).registerUser(any(SignupRequest.class));
+//        verify(userService).registerUser(any(SignupRequestDto.class));
         }
     }
 }

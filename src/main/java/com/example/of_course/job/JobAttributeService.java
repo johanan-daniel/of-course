@@ -1,6 +1,14 @@
 package com.example.of_course.job;
 
-import com.example.of_course.dto.JobAttribute;
+import com.example.of_course.job.dto.JobAttributeDto;
+import com.example.of_course.job.entity.Company;
+import com.example.of_course.job.entity.InterviewStage;
+import com.example.of_course.job.entity.Level;
+import com.example.of_course.job.entity.Status;
+import com.example.of_course.job.repository.CompanyRepository;
+import com.example.of_course.job.repository.InterviewStageRepository;
+import com.example.of_course.job.repository.LevelRepository;
+import com.example.of_course.job.repository.StatusRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -22,40 +30,42 @@ public class JobAttributeService {
         this.companyRepository = companyRepository;
     }
 
-    public Map<String, List<JobAttribute>> getAllStatusTypes() {
-        List<JobAttribute> statusTypesList = statusRepository.findAll()
+    public Map<String, List<JobAttributeDto>> getAllStatusTypes() {
+        List<JobAttributeDto> statusTypesList = statusRepository.findAll()
                 .stream()
-                .map(status -> new JobAttribute(status.getId(), status.getLabel()))
+                .map(status -> new JobAttributeDto(status.getId(), status.getLabel()))
                 .toList();
 
-        Map<String, List<JobAttribute>> statusTypes;
+        Map<String, List<JobAttributeDto>> statusTypes;
         statusTypes = Collections.singletonMap("statusTypes", statusTypesList);
         return statusTypes;
     }
 
 
-    public Map<String, List<JobAttribute>> getAllLevels() {
-        List<JobAttribute> levelsList = levelRepository.findAll()
+    public Map<String, List<JobAttributeDto>> getAllLevels() {
+        List<JobAttributeDto> levelsList = levelRepository.findAll()
                 .stream()
-                .map(level -> new JobAttribute(level.getId(), level.getLabel()))
+                .map(level -> new JobAttributeDto(level.getId(), level.getLabel()))
                 .toList();
 
-        Map<String, List<JobAttribute>> levelsOutput;
+        Map<String, List<JobAttributeDto>> levelsOutput;
         levelsOutput = Collections.singletonMap("levels", levelsList);
         return levelsOutput;
     }
 
 
-    public Map<String, List<JobAttribute>> getInterviewStages() {
-        List<JobAttribute> stagesList = interviewStageRepository.findAll()
+    public Map<String, List<JobAttributeDto>> getInterviewStages() {
+        List<JobAttributeDto> stagesList = interviewStageRepository.findAll()
                 .stream()
-                .map(level -> new JobAttribute(level.getId(), level.getLabel()))
+                .map(level -> new JobAttributeDto(level.getId(), level.getLabel()))
                 .toList();
 
-        Map<String, List<JobAttribute>> stagesOutput;
+        Map<String, List<JobAttributeDto>> stagesOutput;
         stagesOutput = Collections.singletonMap("stages", stagesList);
         return stagesOutput;
     }
+
+
 
     public Status getStatusById(int id) {
         return statusRepository.findById(id).orElseThrow(() ->
@@ -74,6 +84,12 @@ public class JobAttributeService {
     public InterviewStage getInterviewStageById(int id) {
         return interviewStageRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("No such interview stage with id" + id)
+        );
+    }
+
+    public Company getCompanyById(int id) {
+        return companyRepository.findById(id).orElseThrow(() ->
+                new EntityNotFoundException("No such company with id" + id)
         );
     }
 }

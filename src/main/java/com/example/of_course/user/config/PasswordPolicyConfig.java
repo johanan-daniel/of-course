@@ -1,4 +1,4 @@
-package com.example.of_course.config;
+package com.example.of_course.user.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

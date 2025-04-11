@@ -1,20 +1,20 @@
-package com.example.of_course.user;
+package com.example.of_course.user.dto;
 
-public class SignupRequest {
+public class SignupRequestDto {
     private String email = "";
     private String password = "";
     //FIXME make null?
     private String name = "";
 
-    public SignupRequest() {
+    public SignupRequestDto() {
     }
 
-    public SignupRequest(String email, String password) {
+    public SignupRequestDto(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public SignupRequest(String email, String password, String name) {
+    public SignupRequestDto(String email, String password, String name) {
         this.email = email;
         this.password = password;
         this.name = name;

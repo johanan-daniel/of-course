@@ -1,5 +1,6 @@
-package com.example.of_course.user;
+package com.example.of_course.user.controller;
 
+import com.example.of_course.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

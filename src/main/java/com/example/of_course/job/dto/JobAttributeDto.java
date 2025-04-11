@@ -1,10 +1,10 @@
-package com.example.of_course.dto;
+package com.example.of_course.job.dto;
 
-public class JobAttribute {
+public class JobAttributeDto {
     private int id;
     private String label;
 
-    public JobAttribute(int id, String label) {
+    public JobAttributeDto(int id, String label) {
         this.id = id;
         this.label = label;
     }

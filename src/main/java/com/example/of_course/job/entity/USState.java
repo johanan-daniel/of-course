@@ -1,4 +1,4 @@
-package com.example.of_course.location;
+package com.example.of_course.job.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

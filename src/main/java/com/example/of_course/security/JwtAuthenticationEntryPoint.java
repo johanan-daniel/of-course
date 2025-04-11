@@ -1,6 +1,6 @@
 package com.example.of_course.security;
 
-import com.example.of_course.dto.ResponseMessage;
+import com.example.of_course.common.dto.ResponseMessageDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
 
-        ResponseMessage responseBody = new ResponseMessage(
+        ResponseMessageDto responseBody = new ResponseMessageDto(
                 HttpStatus.UNAUTHORIZED.value(),
                 "Authentication failed: JWT token is missing or invalid"
         );

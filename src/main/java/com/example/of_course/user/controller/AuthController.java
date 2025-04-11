@@ -1,6 +1,11 @@
-package com.example.of_course.user;
+package com.example.of_course.user.controller;
 
-import com.example.of_course.dto.ResponseMessage;
+import com.example.of_course.common.dto.ResponseMessageDto;
+import com.example.of_course.user.*;
+import com.example.of_course.user.dto.LoginRequestDto;
+import com.example.of_course.user.dto.LoginResponseDto;
+import com.example.of_course.user.dto.SignupRequestDto;
+import com.example.of_course.user.dto.SignupResponseDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,11 +26,11 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<ResponseMessage> createUser(@RequestBody SignupRequest request) {
+    public ResponseEntity<ResponseMessageDto> createUser(@RequestBody SignupRequestDto request) {
         userService.registerUser(request);
 
-        SignupResponse response =
-                new SignupResponse(
+        SignupResponseDto response =
+                new SignupResponseDto(
                         HttpStatus.CREATED.value(),
                         "User registered successfully",
                         request.getEmail()
@@ -36,11 +41,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest request) {
+    public ResponseEntity<LoginResponseDto> loginUser(@RequestBody LoginRequestDto request) {
        String token = userService.loginUser(request);
-//       ResponseMessage response = new ResponseMessage(message);
-       LoginResponse response =
-               new LoginResponse(
+//       ResponseMessageDto response = new ResponseMessageDto(message);
+       LoginResponseDto response =
+               new LoginResponseDto(
                        token,
                        jwtExpiration
                );
