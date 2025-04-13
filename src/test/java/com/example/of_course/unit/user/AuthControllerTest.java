@@ -1,11 +1,13 @@
-package com.example.of_course.user;
+package com.example.of_course.unit.user;
 
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
 import com.example.of_course.security.JwtService;
+import com.example.of_course.user.UserService;
 import com.example.of_course.user.controller.AuthController;
 import com.example.of_course.user.dto.SignupRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,6 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 // ignore filters to only test controller behavior
 @AutoConfigureMockMvc(addFilters = false)
 @WebMvcTest(AuthController.class)
+@Tag("unit")
 public class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;

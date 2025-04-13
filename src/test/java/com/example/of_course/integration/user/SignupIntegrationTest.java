@@ -1,9 +1,11 @@
-package com.example.of_course.user;
+package com.example.of_course.integration.user;
 
+import com.example.of_course.user.UserRepository;
 import com.example.of_course.user.config.PasswordPolicyConfig;
 import com.example.of_course.user.dto.SignupRequestDto;
 import com.example.of_course.user.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,6 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("test")
+@Tag("integration")
 public class SignupIntegrationTest {
     @Autowired
     private MockMvc mockMvc;

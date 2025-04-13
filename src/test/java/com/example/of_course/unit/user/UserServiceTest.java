@@ -1,10 +1,13 @@
-package com.example.of_course.user;
+package com.example.of_course.unit.user;
 
+import com.example.of_course.user.UserRepository;
+import com.example.of_course.user.UserService;
 import com.example.of_course.user.config.PasswordPolicyConfig;
 import com.example.of_course.exception.UserEmailAlreadyExistsException;
 import com.example.of_course.user.dto.SignupRequestDto;
 import com.example.of_course.user.entity.User;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -19,6 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 public class UserServiceTest {
     @Mock
     private UserRepository userRepository;

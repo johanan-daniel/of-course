@@ -1,6 +1,7 @@
-package com.example.of_course.job;
+package com.example.of_course.unit.job;
 
 import com.example.of_course.exception.CompanyNameAlreadyExistsException;
+import com.example.of_course.job.JobAttributeService;
 import com.example.of_course.job.dto.CompanyDto;
 import com.example.of_course.job.dto.JobAttributeDto;
 import com.example.of_course.job.entity.Company;
@@ -10,6 +11,7 @@ import com.example.of_course.job.repository.InterviewStageRepository;
 import com.example.of_course.job.repository.LevelRepository;
 import com.example.of_course.job.repository.StatusRepository;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -25,6 +27,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@Tag("unit")
 public class JobAttributeServiceTest {
     @Mock
     private CompanyRepository companyRepository;

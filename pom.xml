@@ -116,6 +116,45 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!-- Surefire for Unit Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <!-- defines tags that should be included/excluded -->
+                    <groups>unit</groups>
+                    <excludedGroups>integration</excludedGroups>
+                </configuration>
+            </plugin>
+            <!-- Failsafe for Integration Tests -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>3.1.2</version>
+                <executions>
+                    <!-- configures maven to run groups from this plugin during integration-test phase-->
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                        </goals>
+                        <configuration>
+                            <!-- defines tags that should be included/excluded -->
+                            <groups>integration</groups>
+                            <excludedGroups>unit</excludedGroups>
+                        </configuration>
+                    </execution>
+                    <!-- configures maven to run plugin verify task during verify phase-->
+                    <execution>
+                        <id>verify</id>
+                        <goals>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -1,6 +1,8 @@
-package com.example.of_course.user;
+package com.example.of_course.unit.user;
 
+import com.example.of_course.user.UserRepository;
 import com.example.of_course.user.entity.User;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @ActiveProfiles("test")
+@Tag("unit")
 public class UserRepositoryTest {
     @Autowired
     private TestEntityManager entityManager;
