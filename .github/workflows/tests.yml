@@ -1,4 +1,4 @@
-name: CI
+name: Maven Unit and Integration Tests
 
 on:
   push:
@@ -20,7 +20,6 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-        # TODO check if this works
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -29,7 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-        # TODO check if this is correct
       - name: Build and run unit tests
         run: mvn test
         # Since surefire picks up only unit tests, it ensures only these tests run.
@@ -48,7 +46,6 @@ jobs:
           distribution: 'temurin'
           java-version: 21
 
-        # TODO check if this works
       - name: Cache Maven dependencies
         uses: actions/cache@v3
         with:
@@ -57,7 +54,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-        # FIXME use verify or integration-test?
+        # runs verify phase to fail build if integration tests fail
       - name: Build and run integration tests
         run: mvn verify
         # maven-failsafe-plugin will run integration tests during the verify phase.
