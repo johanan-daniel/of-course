@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
+// react router generates <link> tags for each item
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -23,6 +24,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// react router defines structure for HTML and wraps route's content (children)
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -45,6 +47,7 @@ export default function App() {
   return <Outlet />;
 }
 
+// react router defines what to output for errors
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   let message = "Oops!";
   let details = "An unexpected error occurred.";
