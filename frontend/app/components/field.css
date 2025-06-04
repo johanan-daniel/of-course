@@ -1,0 +1,44 @@
+.field {
+    /* text */
+    color: var(--text-field);
+    font-size: 15px;
+
+    /* border & bounds */
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 7px;
+    outline: none; /* prevents default browser outline */
+    background-color: var(--bg-field);
+
+    /* other */
+    box-sizing: border-box;
+    transition: 250ms;
+}
+
+.field::placeholder {
+    color: var(--placeholder);
+}
+
+/* outline with transition delay when in focus */
+.field:focus {
+    border-color: var(--blue);
+    transition: 250ms;
+}
+
+.field.button {
+    width: auto;
+}
+
+.multiLine {
+    resize: none;
+}
+
+.fieldError {
+    /* marked as important to override normal blue focus when error */
+    border: 2px solid var(--error-red) !important;
+}
+
+.fieldWarning {
+    border: 2px solid var(--warning) !important;
+}
