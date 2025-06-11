@@ -27,7 +27,7 @@ export const links: Route.LinksFunction = () => [
 // react router defines structure for HTML and wraps route's content (children)
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="colorAuto">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
