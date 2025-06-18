@@ -130,6 +130,7 @@ public class JobAttributeService {
         }
 
         Company company = new Company(companyDto.getName(), companyDto.getCareersPageUrl());
+        // Saved company will have an auto-generated ID added
         Company savedCompany = companyRepository.save(company);
         return new CompanyDto(savedCompany.getId(), savedCompany.getName(), savedCompany.getCareersPageUrl());
     }

@@ -38,7 +38,7 @@ public class JobAttributeController {
         return ResponseEntity.ok(stages);
     }
 
-    @GetMapping("/companies"        )
+    @GetMapping("/companies")
     public ResponseEntity<Map<String, List<CompanyDto>>> getAllCompanies() {
         Map<String, List<CompanyDto>> companies = jobAttributeService.getAllCompanies();
         return ResponseEntity.ok(companies);

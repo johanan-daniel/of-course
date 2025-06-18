@@ -60,9 +60,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String parseToken(HttpServletRequest request) {
         final String authHeader = request.getHeader("Authorization");
+        int indexOfToken = 7;
 
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            return authHeader.substring(7);
+            return authHeader.substring(indexOfToken);
         }
 
         return null;

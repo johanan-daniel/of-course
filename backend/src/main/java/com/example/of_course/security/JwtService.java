@@ -35,7 +35,7 @@ public class JwtService {
     }
 
     /**
-     * Validates the token by checking its expiration date, signature and structure.
+     * Validates the token by checking its expiration date, signature, and structure.
      *
      * @param token JWT token string
      * @return true if valid; false otherwise.

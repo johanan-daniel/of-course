@@ -56,6 +56,7 @@ public class UserService {
         }
 
         int nameLen = request.getName().length();
+        // CHECK move to config file?
         int maxNameLen = 50;
         if (nameLen > maxNameLen) {
             throw new IllegalArgumentException("Name length must be less than " + maxNameLen + " chars.");
@@ -84,6 +85,7 @@ public class UserService {
         User newUser = new User(request.getEmail(), hashedPassword);
         userRepo.save(newUser);
 
+        // TODO return user object or something else?
         return true;
     }
 
