@@ -102,6 +102,19 @@ public class JobAttributeService {
     }
 
 
+    public Map<String, List<CompanyDto>> getCompaniesByName(String name) {
+        if (name.length() > 100) {
+            throw new IllegalArgumentException("Name may not be more than 100 characters");
+        }
+
+        List<CompanyDto> companiesList = companyRepository.findByNameContainingIgnoreCase(name)
+                .stream()
+                .map(company -> new CompanyDto(company.getId(), company.getName(), company.getCareersPageUrl()))
+                .toList();
+        return Collections.singletonMap("companies", companiesList);
+    }
+
+
     public CompanyDto getCompanyById(int id) {
         Company company = companyRepository.findById(id).orElseThrow(() ->
                 new EntityNotFoundException("No such company with id" + id)
@@ -134,4 +147,5 @@ public class JobAttributeService {
         Company savedCompany = companyRepository.save(company);
         return new CompanyDto(savedCompany.getId(), savedCompany.getName(), savedCompany.getCareersPageUrl());
     }
+
 }

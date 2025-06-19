@@ -39,11 +39,16 @@ public class JobAttributeController {
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<Map<String, List<CompanyDto>>> getAllCompanies() {
-        Map<String, List<CompanyDto>> companies = jobAttributeService.getAllCompanies();
+    public ResponseEntity<Map<String, List<CompanyDto>>> getAllCompanies(@RequestParam(required = false) String name) {
+        Map<String, List<CompanyDto>> companies;
+
+        if (name != null) {
+            companies = jobAttributeService.getCompaniesByName(name);
+        } else {
+            companies = jobAttributeService.getAllCompanies();
+        }
         return ResponseEntity.ok(companies);
     }
-
 
     @GetMapping("/companies/{id}")
     public ResponseEntity<CompanyDto> getCompany(@PathVariable int id) {

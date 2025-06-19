@@ -53,7 +53,7 @@ public class RequestResponseLoggingFilter extends OncePerRequestFilter {
             JsonNode json = objectMapper.readTree(responseBody);
             String message = json.has("message") ? json.get("message").asText() : "";
 
-            logger.error("Response: {} {}", status, message);
+            logger.info("Response: {} {}", status, message);
             if (status >= 500) {
                 String details = json.has("details") ? json.get("details").asText() : "No details";
                 logger.error("Details: {}", details);

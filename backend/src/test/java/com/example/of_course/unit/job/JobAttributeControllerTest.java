@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -110,6 +111,32 @@ public class JobAttributeControllerTest {
                 .andExpect(jsonPath("$.companies").exists());
 
         verify(jobAttributeService).getAllCompanies();
+    }
+
+    @Test
+    void whenGetCompaniesByLikeNameThatExists_thenReturnCompanies() throws Exception {
+        String testName = "oogl";
+        when(jobAttributeService.getCompaniesByName("testName")).thenReturn(
+                Map.of("companies", List.of(new CompanyDto(1, "GtestNamee", null)))
+        );
+
+        mockMvc.perform(get(JOB_ATTRIBUTE_URL + "/companies?name=testName"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companies").exists());
+
+        verify(jobAttributeService).getCompaniesByName("testName");
+    }
+
+    @Test
+    void whenGetCompaniesByLikeNameThatNotExists_thenReturnEmptyCompanies() throws Exception {
+        String testName = "appl";
+        when(jobAttributeService.getCompaniesByName("testName")).thenReturn(Map.of("companies", List.of()));
+
+        mockMvc.perform(get(JOB_ATTRIBUTE_URL + "/companies?name=testName"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.companies", hasSize(0)));
+
+        verify(jobAttributeService).getCompaniesByName("testName");
     }
 
     @Test
