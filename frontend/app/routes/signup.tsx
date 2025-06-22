@@ -6,6 +6,11 @@ import './signup.css'
 import { ButtonPrimary } from '~/components/button'
 import { Link, useNavigate } from 'react-router'
 
+interface ErrorMessage {
+    email: string
+    password: string
+}
+
 export function meta({}: Route.MetaArgs) {
     return [
         { title: 'Signup - OfCourse' },
@@ -26,10 +31,7 @@ function SignupBox() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState<{
-        email: string
-        password: string
-    } | null>(null)
+    const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null)
     const navigate = useNavigate()
 
     const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -117,9 +119,7 @@ function SignupBox() {
     )
 }
 
-type ErrorProps = { errorMessage: { email?: string; password?: string } | null }
-
-function ErrorBlock({ errorMessage }: ErrorProps) {
+function ErrorBlock({ errorMessage }: { errorMessage: ErrorMessage | null }) {
     if (!errorMessage || (!errorMessage.email && !errorMessage.password)) {
         return ''
     }
