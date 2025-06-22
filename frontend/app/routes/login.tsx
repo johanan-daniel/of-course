@@ -1,35 +1,34 @@
 import { useState } from 'react'
-import type { Route } from './+types/signup'
 import Field from '~/components/field'
-
-import './signup.css'
 import { ButtonPrimary } from '~/components/button'
 import { Link, useNavigate } from 'react-router'
+import '../routes/signup.css' // Reusing the signup styles since they're appropriate for login too
 
-export function meta({}: Route.MetaArgs) {
+interface ErrorMessage {
+    email: string
+    password: string
+}
+
+export function meta() {
     return [
-        { title: 'Signup - OfCourse' },
-        { name: 'description', content: 'Create an account for OfCourse' },
+        { title: 'Login - OfCourse' },
+        { name: 'description', content: 'Login to your OfCourse account' },
     ]
 }
 
-export default function Signup() {
+export default function Login() {
     return (
         <div>
-            <h1>Signup</h1>
-            <SignupBox />
+            <h1>Login</h1>
+            <LoginBox />
         </div>
     )
 }
 
-function SignupBox() {
+function LoginBox() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState<{
-        email: string
-        password: string
-    } | null>(null)
+    const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null)
     const navigate = useNavigate()
 
     const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,27 +41,17 @@ function SignupBox() {
         setErrorMessage(null)
     }
 
-    const confirmPasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setConfirmPassword(e.target.value)
-        setErrorMessage(null)
-    }
-
     const submitHandler = (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault()
 
         const errors = { email: '', password: '' }
 
         if (email.length < 2 || email.length > 100 || !email.includes('@')) {
-            errors['email'] = 'Invalid email address'
+            errors.email = 'Invalid email address'
         }
 
-        if (password !== confirmPassword) {
-            errors['password'] = 'Passwords do not match'
-        }
-
-        if (password.length < 12) {
-            errors['password'] =
-                'Password length must be at least 12 characters'
+        if (password.length < 1) {
+            errors.password = 'Password is required'
         }
 
         if (errors.email || errors.password) {
@@ -70,9 +59,9 @@ function SignupBox() {
             return
         }
 
-        console.log(email, password, confirmPassword)
-        // TODO send to server
-        // TODO recieve & save JWT
+        console.log('Login attempt with:', email, password)
+        // TODO: Send to server for authentication
+        // TODO: Receive & save JWT
         navigate('/')
     }
 
@@ -82,33 +71,26 @@ function SignupBox() {
                 <form onSubmit={submitHandler}>
                     <ErrorBlock errorMessage={errorMessage} />
                     <Field
-                        // ref={ref}
                         value={email}
                         onChange={emailHandler}
                         placeholder={'Email address'}
+                        autoComplete="username"
                     />
                     <Field
-                        // ref={ref}
                         value={password}
                         onChange={passwordHandler}
                         placeholder={'Password'}
                         type="password"
-                    />
-                    <Field
-                        // ref={ref}
-                        value={confirmPassword}
-                        onChange={confirmPasswordHandler}
-                        placeholder={'Confirm password'}
-                        type="password"
+                        autoComplete="current-password"
                     />
                     <div style={{ marginTop: '20px' }}>
                         <ButtonPrimary className="formSubmit" type="submit">
-                            Sign up
+                            Login
                         </ButtonPrimary>
                     </div>
                     <div className="linkContainer">
-                        <Link to="/login" className="link">
-                            Have an account? Log in
+                        <Link to="/signup" className="link">
+                            Don't have an account? Sign up
                         </Link>
                     </div>
                 </form>
@@ -117,9 +99,7 @@ function SignupBox() {
     )
 }
 
-type ErrorProps = { errorMessage: { email?: string; password?: string } | null }
-
-function ErrorBlock({ errorMessage }: ErrorProps) {
+function ErrorBlock({ errorMessage }: { errorMessage: ErrorMessage | null }) {
     if (!errorMessage || (!errorMessage.email && !errorMessage.password)) {
         return ''
     }
@@ -133,4 +113,19 @@ function ErrorBlock({ errorMessage }: ErrorProps) {
     }
 
     return <p className="error message">{message}</p>
+
+    // return (
+    //     <div style={{ marginBottom: '15px' }}>
+    //         {errorMessage.email && (
+    //             <div style={{ color: 'var(--error-red)' }}>
+    //                 {errorMessage.email}
+    //             </div>
+    //         )}
+    //         {errorMessage.password && (
+    //             <div style={{ color: 'var(--error-red)' }}>
+    //                 {errorMessage.password}
+    //             </div>
+    //         )}
+    //     </div>
+    // )
 }
